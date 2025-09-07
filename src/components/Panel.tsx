@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ColorToggle from "./ColorToggle";
 import { Card, CardContent } from "./ui/card";
 
