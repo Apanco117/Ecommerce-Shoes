@@ -55,25 +55,43 @@ export default function ShowRoom({ setSelectedObject, selectedObject, selectedCo
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    // Cleanup function to remove the listener when the component unmounts
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isRotate]); // Re-run effect if isRotate changes, to have the correct value in the closure
+        window.addEventListener("keydown", handleKeyDown);
+        // Cleanup function to remove the listener when the component unmounts
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [isRotate]); // Re-run effect if isRotate changes, to have the correct value in the closure
 
-  // --- Initial setup for the 3D model ---
-  // This useEffect now has a dependency array to run only once when the model is loaded
-  useEffect(() => {
-    if (!gltf) return;
-    // Your previous logic was fine, this is just another way to write it.
-    gltf.scene.traverse((child) => {
-        if (child instanceof TRHEE.Mesh) {
-            child.castShadow = true;
-        }
-    });
-  }, [gltf]);
+    // --- Initial setup for the 3D model ---
+    // This useEffect now has a dependency array to run only once when the model is loaded
+    useEffect(() => {
+        if (!gltf) return;
+        // Your previous logic was fine, this is just another way to write it.
+        gltf.scene.traverse((child) => {
+            if (child instanceof TRHEE.Mesh) {
+                child.castShadow = true;
+            }
+        });
+    }, [gltf]);
 
+    useEffect( () => {
+        const rightShoe = gltf.scene.children[0];
+        const leftShoe = gltf.scene.children[1];
+
+        rightShoe.rotation.y = TRHEE.MathUtils.degToRad(10);
+        leftShoe.rotation.y = TRHEE.MathUtils.degToRad(335);
+        leftShoe.rotation.z = TRHEE.MathUtils.degToRad(-30);
+
+        leftShoe.position.x = - 0.25;
+        leftShoe.position.z = 0.37;
+        leftShoe.position.y = 0.44;
+
+        // Sombra
+        gltf.scene.children.forEach( ( shoes ) => {
+            shoes.children.forEach( mesh => mesh.castShadow = true )
+        } )
+
+    } )
 
   // --- Logic for automatic rotation ---
   const angle = useRef(0);
