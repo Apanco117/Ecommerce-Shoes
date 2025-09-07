@@ -5,9 +5,15 @@ import { Input } from "@components/ui/input" // 1. Re-importamos el Input
 import { SearchIcon, Menu, X } from "lucide-react"
 import Panel from "@components/Panel"
 import { ThemeProvider } from "@components/theme-provider"
+import * as THREE from "three";
+
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // 1. Estado para el objeto 3D seleccionado y el color, ahora vive en el componente padre.
+  const [selectedObject, setSelectedObject] = useState<THREE.Mesh | null>(null);
+  const [selectedColor, setSelectedColor] = useState('rosa');
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -77,8 +83,15 @@ function App() {
         )}
 
         <div className=" flex-1 relative">
-          <Home/>
-          <Panel/>
+          <Home
+            setSelectedObject={setSelectedObject} 
+            selectedObject={selectedObject}
+            selectedColor={selectedColor} 
+          />
+          <Panel
+            selectedColor={selectedColor} 
+            setSelectedColor={setSelectedColor} 
+          />
         </div>
       </div>
     </ThemeProvider>

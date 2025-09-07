@@ -2,10 +2,12 @@ import { useState } from "react";
 import ColorToggle from "./ColorToggle";
 import { Card, CardContent } from "./ui/card";
 
+type PanelProps = {
+    selectedColor: string;
+    setSelectedColor: (color: string) => void;
+}
 
-
-export default function Panel() {
-    const [selectedColor, setSelectedColor] = useState('rosa');
+export default function Panel( { selectedColor, setSelectedColor }: PanelProps ) {
 
     return (
         // 1. Añadimos pointer-events-none para que este div no bloquee los clics al Canvas
