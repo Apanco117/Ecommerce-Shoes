@@ -22,7 +22,7 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="flex flex-col h-screen w-full">
+      <div className="flex flex-col h-dvh w-full">
         <header className="relative bg-black w-full h-20 shadow-md px-4 sm:px-8 md:px-24 flex justify-between items-center z-20">
           {/* Logo Section */}
           <div className="h-full py-3 flex-shrink-0">
