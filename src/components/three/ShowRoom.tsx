@@ -4,6 +4,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { CameraControls, ContactShadows } from "@react-three/drei";
 import { useEffect, useRef, useState } from "react";
 import Luces from "./Luces";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 // Prop types from the parent component
 type ShowRoomProps = {
@@ -21,7 +22,12 @@ const colorMap: { [key: string]: string } = {
 
 export default function ShowRoom({ setSelectedObject, selectedObject, selectedColor }: ShowRoomProps) {
   const cameraControlsRef = useRef<CameraControls>(null!);
-  const gltf = useLoader(GLTFLoader, "./models/custom.glb");
+  const gltf = useLoader(GLTFLoader, "/models/custom.glb", loader => {
+    const dracoLoader = new DRACOLoader();
+    // Esta ruta es crucial. Le dice a three.js dónde encontrar los archivos de descompresión.
+    dracoLoader.setDecoderPath('/draco/');
+    loader.setDRACOLoader(dracoLoader);
+  });
 
   // State to control the automatic rotation
   const [isRotate, setRotate] = useState<boolean>(true); // Start rotating by default
