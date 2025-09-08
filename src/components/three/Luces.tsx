@@ -25,25 +25,25 @@ export default function Luces() {
                 position={[3, 3, 3]} />
             <pointLight
                 //castShadow
-                ref={miLuzRef1}
+                // ref={miLuzRef1}
                 position={[1,1.5,1]}
                 intensity={2}
             />
             <pointLight
                 //castShadow
-                ref={miLuzRef2}
+                // ref={miLuzRef2}
                 position={[-1,1.5,1]}
                 intensity={2}
             />
             <pointLight
                 //castShadow
-                ref={miLuzRef3}
+                // ref={miLuzRef3}
                 position={[-1,1.5,-1]}
                 intensity={2}
             />
             <pointLight
                 //castShadow
-                ref={miLuzRef4}
+                // ref={miLuzRef4}
                 position={[1,1.5,-1]}
                 intensity={2}
             />

@@ -1,25 +1,29 @@
 import { useState } from "react"
+import * as THREE from "three";
 import { Button } from "@components/ui/button"
 import Home from "./components/Home"
-import { Input } from "@components/ui/input" // 1. Re-importamos el Input
+import { Input } from "@components/ui/input"
 import { SearchIcon, Menu, X } from "lucide-react"
 import Panel from "@components/Panel"
 import { ThemeProvider } from "@components/theme-provider"
-import * as THREE from "three";
-
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  // 1. Estado para el objeto 3D seleccionado y el color, ahora vive en el componente padre.
+  
+  // 1. Creamos los estados que se compartirán entre ShowRoom y Panel
   const [selectedObject, setSelectedObject] = useState<THREE.Mesh | null>(null);
   const [selectedColor, setSelectedColor] = useState('rosa');
+  const [currentView, setCurrentView] = useState(0); // Estado para la vista de la cámara
+
+  // 2. Creamos la función que el panel usará para cambiar la vista
+  const handleViewChange = (viewNumber: number) => {
+    setCurrentView(viewNumber);
+  };
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      
       <div className="flex flex-col h-screen w-full">
-        <header className="relative bg-black w-full h-20 shadow-md px-4 sm:px-8 md:px-24 flex justify-between items-center">
+        <header className="relative bg-black w-full h-20 shadow-md px-4 sm:px-8 md:px-24 flex justify-between items-center z-20">
           {/* Logo Section */}
           <div className="h-full py-3 flex-shrink-0">
               <img 
@@ -82,15 +86,18 @@ function App() {
           </nav>
         )}
 
-        <div className=" flex-1 relative">
-          <Home
-            setSelectedObject={setSelectedObject} 
+        <div className="flex-1 bg-white/80">
+          <Home 
+            setSelectedObject={setSelectedObject}
             selectedObject={selectedObject}
-            selectedColor={selectedColor} 
+            selectedColor={selectedColor}
+            currentView={currentView}
           />
-          <Panel
+          {/* 3. Pasamos la función y los estados al Panel */}
+          <Panel 
             selectedColor={selectedColor} 
             setSelectedColor={setSelectedColor} 
+            onViewChange={handleViewChange}
           />
         </div>
       </div>
